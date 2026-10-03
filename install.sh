@@ -132,10 +132,8 @@ fetch_source() {
     [ -f "$source_file" ] || die "source file not found: $source_file"
     cp -- "$source_file" "$tmp_file"
   elif command -v curl >/dev/null 2>&1; then
-    [ "$raw_base" != "$DEFAULT_RAW_BASE" ] || die "set SSHPICK_RAW_BASE to the published repository raw URL"
     curl -fsSL "$raw_base/sshpick" -o "$tmp_file"
   elif command -v wget >/dev/null 2>&1; then
-    [ "$raw_base" != "$DEFAULT_RAW_BASE" ] || die "set SSHPICK_RAW_BASE to the published repository raw URL"
     wget -qO "$tmp_file" "$raw_base/sshpick"
   else
     die "curl or wget is required"
