@@ -1,0 +1,2 @@
+{"ts":"2026-10-03T00:00:00Z","plan_id":"SSHPICK-261003-ssh-detail-readme","actor":"haku","event":"implementation_verified","detail":"Deduplicated supported ssh -G preview fields case-insensitively; added fake-resolver regression test; copied supplied screenshot and updated README."}
+{"ts":"2026-10-03T00:00:00Z","plan_id":"SSHPICK-261003-ssh-detail-readme","actor":"haku","event":"verification_passed","detail":"bash tests/test.sh, bash -n, dash -n, git diff --check, and direct real OpenSSH utils-pipeline preview checks passed."}

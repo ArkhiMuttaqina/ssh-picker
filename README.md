@@ -3,6 +3,13 @@
 `sshp` is a fuzzy SSH host picker for aliases in `~/.ssh/config`. It uses
 OpenSSH to resolve each selected host and `fzf` for the interactive menu.
 
+![sshpick Ubuntu terminal preview](docs/sshpick-preview.jpg)
+
+The picker keeps the selected alias and its resolved SSH settings together in
+one preview card. Repeated directives from inherited SSH config blocks are
+collapsed by field name, so the detail panel cannot show a second copy of the
+same setting while moving between hosts such as `utils-pipeline`.
+
 ## Install
 
 Review the installer first:

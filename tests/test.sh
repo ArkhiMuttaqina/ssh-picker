@@ -32,6 +32,26 @@ grep -Eq '^hostname[[:space:]]+192\.0\.2\.10$' "$test_root/preview.txt"
 grep -Eq '^user[[:space:]]+deploy$' "$test_root/preview.txt"
 grep -Eq '^port[[:space:]]+2222$' "$test_root/preview.txt"
 
+# The detail panel is a single compact card. Repeated directives from a
+# resolver must not create duplicate rows, even if their casing differs.
+mkdir -p "$test_root/bin"
+cat > "$test_root/bin/ssh" <<'EOF'
+#!/usr/bin/env bash
+cat <<'OUTPUT'
+hostname utils-pipeline.internal
+user developer
+port 22
+IdentityFile ~/.ssh/id_ed25519
+IDENTITYFILE ~/.ssh/id_ed25519
+identitiesonly yes
+OUTPUT
+EOF
+chmod +x "$test_root/bin/ssh"
+PATH="$test_root/bin:$PATH" HOME="$test_home" "$repo/sshpick" --preview utils-pipeline > "$test_root/dedup-preview.txt"
+[ "$(grep -Ec '^Host utils-pipeline$' "$test_root/dedup-preview.txt")" -eq 1 ]
+[ "$(grep -Eic '^identityfile[[:space:]]' "$test_root/dedup-preview.txt")" -eq 1 ]
+[ "$(grep -Ec '^identitiesonly[[:space:]]+yes$' "$test_root/dedup-preview.txt")" -eq 1 ]
+
 HOME="$test_home" sh "$repo/install.sh" \
   --source-file "$repo/sshpick" \
   --no-install-deps > "$test_root/install-first.txt"

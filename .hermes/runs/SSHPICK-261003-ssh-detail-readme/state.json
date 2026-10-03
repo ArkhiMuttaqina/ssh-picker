@@ -1,0 +1,9 @@
+{
+  "plan_id": "SSHPICK-261003-ssh-detail-readme",
+  "status": "verified_local",
+  "workspace": "/home/arkhi25/repo/sshpick",
+  "updated_utc": "2026-10-03T00:00:00Z",
+  "current_task": "T004",
+  "next_step": "Await explicit authorization if Arkhi wants Git publication",
+  "blockers": []
+}

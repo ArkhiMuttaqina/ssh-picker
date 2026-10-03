@@ -43,11 +43,21 @@ preview_host() {
   printf 'Host %s\n\n' "$host"
   ssh -F "$config_file" -G -- "$host" 2>/dev/null |
     awk '
-      $1 == "hostname" || $1 == "user" || $1 == "port" ||
-      $1 == "proxyjump" || $1 == "proxycommand" ||
-      $1 == "identityfile" || $1 == "identitiesonly" ||
-      $1 == "forwardagent" || $1 == "requesttty" {
-        if (!seen[$1]++) printf "%-16s %s\n", $1, substr($0, index($0, $2))
+      # ssh -G may emit inherited/repeated directives (notably identityfile).
+      # The picker has one compact detail card, so keep the first effective
+      # value for each supported field and never render a second row/card.
+      {
+        key = tolower($1)
+        if (key == "hostname" || key == "user" || key == "port" ||
+            key == "proxyjump" || key == "proxycommand" ||
+            key == "identityfile" || key == "identitiesonly" ||
+            key == "forwardagent" || key == "requesttty") {
+          if (!seen[key]++) {
+            value = $0
+            sub(/^[^[:space:]]+[[:space:]]+/, "", value)
+            printf "%-16s %s\n", key, value
+          }
+        }
       }
     '
 }
