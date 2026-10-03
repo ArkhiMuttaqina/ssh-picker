@@ -1,7 +1,7 @@
 # SSHPICK-261003-ssh-detail-readme
 
 ## Problem
-The `sshp` preview/detail surface can show duplicate SSH configuration entries for the currently selected alias, making the right panel ambiguous. The repository README also lacks the supplied product screenshot.
+The `sshp` preview/detail surface can show duplicate SSH configuration entries for the currently selected alias, making the right panel ambiguous. The repository README also lacks the supplied product screenshot. On a fresh host without `~/.ssh/config`, `sshp` previously stopped with a raw missing-file error instead of safely preparing the standard empty configuration file.
 
 ## Business intent
 Make the selected host detail deterministic: one detail card per selected alias, with each supported effective SSH field rendered at most once. Add the supplied screenshot to the repository and document the interface and behavior.
@@ -37,9 +37,10 @@ Make the selected host detail deterministic: one detail card per selected alias,
 
 ## Tasks
 - [x] T001 Inspect repository, current branch, source, tests, and clean baseline — Haku.
-- [ ] T002 Implement deterministic detail rendering and regression test — Haku.
-- [ ] T003 Add screenshot asset and update README — Haku.
-- [ ] T004 Run focused verification, inspect final diff, and write evidence — Haku.
+- [x] T002 Implement deterministic detail rendering and regression test — Haku.
+- [x] T003 Add screenshot asset and update README — Haku.
+- [x] T004 Run focused verification, inspect final diff, and write evidence — Haku.
+- [x] T005 Bootstrap a missing default SSH config safely and document first-run behavior — Haku.
 
 ## Acceptance criteria
 - `sshpick --preview <alias>` emits exactly one `Host <alias>` header.

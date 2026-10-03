@@ -49,7 +49,7 @@ sshp --preview myhost # inspect resolved SSH settings
 sshp --config ~/.ssh/work.conf
 ```
 
-The picker ignores wildcard and negated `Host` patterns, so the menu contains concrete host aliases only.
+The picker ignores wildcard and negated `Host` patterns, so the menu contains concrete host aliases only. On the first run, if the default `~/.ssh/config` does not exist, `sshp` creates the file with private permissions (`700` for `~/.ssh`, `600` for `config`) and tells you where to add your first `Host` alias. An explicitly supplied `--config` path is never created automatically.
 
 ## Installer options
 

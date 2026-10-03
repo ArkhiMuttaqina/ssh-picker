@@ -27,6 +27,20 @@ HOME="$test_home" "$repo/sshpick" --list > "$test_root/hosts.txt"
 printf '%s\n' alpha alpha-alt beta > "$test_root/expected-hosts.txt"
 diff -u "$test_root/expected-hosts.txt" "$test_root/hosts.txt"
 
+# A first run on a machine without ~/.ssh/config should bootstrap the
+# standard config path instead of failing with a confusing missing-file error.
+missing_home="$test_root/missing-home"
+set +e
+HOME="$missing_home" "$repo/sshpick" --list > "$test_root/missing-list.txt" 2> "$test_root/missing-error.txt"
+missing_status=$?
+set -e
+[ "$missing_status" -eq 1 ]
+[ -f "$missing_home/.ssh/config" ]
+[ "$(stat -c '%a' "$missing_home/.ssh")" = 700 ]
+[ "$(stat -c '%a' "$missing_home/.ssh/config")" = 600 ]
+grep -Fq "created SSH config" "$test_root/missing-error.txt"
+grep -Fq "Host alias" "$test_root/missing-error.txt"
+
 HOME="$test_home" "$repo/sshpick" --preview alpha > "$test_root/preview.txt"
 grep -Eq '^hostname[[:space:]]+192\.0\.2\.10$' "$test_root/preview.txt"
 grep -Eq '^user[[:space:]]+deploy$' "$test_root/preview.txt"

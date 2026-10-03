@@ -2,13 +2,34 @@
 set -euo pipefail
 
 VERSION="1.0.0"
-config_file="${HOME}/.ssh/config"
+default_config_file="${HOME}/.ssh/config"
+config_file="$default_config_file"
+config_is_default=1
 mode="pick"
 selected_host=""
 
 die() {
   printf 'sshpick: %s\n' "$*" >&2
   exit 1
+}
+
+ensure_config_file() {
+  [ -f "$config_file" ] && return 0
+
+  if [ "$config_is_default" -ne 1 ]; then
+    die "SSH config not found: $config_file"
+  fi
+
+  ssh_dir="${HOME}/.ssh"
+  if [ -e "$ssh_dir" ] && [ ! -d "$ssh_dir" ]; then
+    die "cannot create SSH config: $ssh_dir is not a directory"
+  fi
+
+  mkdir -p -- "$ssh_dir" || die "cannot create SSH directory: $ssh_dir"
+  chmod 700 -- "$ssh_dir" || die "cannot secure SSH directory: $ssh_dir"
+  (umask 077 && : >> "$config_file") || die "cannot create SSH config: $config_file"
+  chmod 600 -- "$config_file" || die "cannot secure SSH config: $config_file"
+  printf 'sshpick: created SSH config: %s\n' "$config_file" >&2
 }
 
 usage() {
@@ -67,6 +88,7 @@ while [ "$#" -gt 0 ]; do
     -c|--config)
       [ "$#" -ge 2 ] || die "$1 needs a file"
       config_file="$2"
+      config_is_default=0
       shift 2
       ;;
     -l|--list)
@@ -97,11 +119,13 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
-[ -f "$config_file" ] || die "SSH config not found: $config_file"
+ensure_config_file
 
 case "$mode" in
   list)
-    list_hosts
+    hosts="$(list_hosts)"
+    [ -n "$hosts" ] || die "SSH config is ready at $config_file; add a concrete Host alias, then run sshp again"
+    printf '%s\n' "$hosts"
     exit 0
     ;;
   preview)
