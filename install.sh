@@ -2,7 +2,7 @@
 set -eu
 
 VERSION="1.0.0"
-DEFAULT_RAW_BASE="https://raw.githubusercontent.com/OWNER/REPO/main"
+DEFAULT_RAW_BASE="https://raw.githubusercontent.com/ArkhiMuttaqina/ssh-picker/main"
 raw_base="${SSHPICK_RAW_BASE:-$DEFAULT_RAW_BASE}"
 bin_dir="${SSHPICK_BIN_DIR:-${HOME}/.local/bin}"
 source_file="${SSHPICK_SOURCE_FILE:-}"

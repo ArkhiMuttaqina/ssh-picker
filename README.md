@@ -8,13 +8,13 @@ OpenSSH to resolve each selected host and `fzf` for the interactive menu.
 Review the installer first:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/main/install.sh
+curl -fsSL https://raw.githubusercontent.com/ArkhiMuttaqina/ssh-picker/main/install.sh
 ```
 
 Then install:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ArkhiMuttaqina/ssh-picker/main/install.sh | bash
 ```
 
 The installer:
@@ -29,7 +29,7 @@ The installer:
 For production fleets, pin a release tag instead of mutable `main`:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/v1.0.0/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ArkhiMuttaqina/ssh-picker/v1.0.0/install.sh | bash
 ```
 
 ## Usage
