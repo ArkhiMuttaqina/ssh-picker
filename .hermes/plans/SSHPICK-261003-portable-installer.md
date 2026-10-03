@@ -40,7 +40,7 @@ Provide a small portable Bash SSH picker with an installer suitable for a review
 ## Tasks
 - [x] T001 Inspect current setup and repository boundaries — Haku.
 - [x] T002 Implement portable source, installer, docs, and focused tests — Haku.
-- [ ] T003 Run final verification wave and inspect diff — Haku.
+- [x] T003 Run final verification wave and inspect diff — Haku.
 - [ ] T004 Publish to GitHub after repository access and visibility are explicitly available — Haku/user.
 
 ## Acceptance criteria
